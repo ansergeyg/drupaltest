@@ -1,0 +1,114 @@
+{
+    "name": "cnect-web/d8p",
+    "description": "CNECT Project template for Drupal 8 projects with Composer, Robo and Behat",
+    "type": "project",
+    "license": "GPL-2.0+",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "authors": [
+        {
+            "name": "Horacio Lopes",
+            "role": "Developer"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://packages.drupal.org/8"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9",
+        "composer/installers": "^1.2",
+        "consolidation/robo": "^1.1",
+        "cweagans/composer-patches": "^1.6",
+        "drupal-composer/drupal-scaffold": "^2.2",
+        "drupal/address": "^1.0",
+        "drupal/admin_toolbar": "^1.21",
+        "drupal/allowed_formats": "^1.1",
+        "drupal/bootstrap": "^3.5",
+        "drupal/config_actions": "^1.0@beta",
+        "drupal/config_split": "^1.1",
+        "drupal/console": "~1.0",
+        "drupal/core": "~8.4",
+        "drupal/ctools": "^3.0",
+        "drupal/features": "^3.5",
+        "drupal/field_group": "^1.0@RC",
+        "drupal/geysir": "^1.0",
+        "drupal/migrate_plus": "^2.0",
+        "drupal/migrate_tools": "^2.0",
+        "drupal/paragraphs": "^1.1",
+        "drupal/rabbitmq": "^1.1",
+        "drush/drush": "~9.0",
+        "webflo/drupal-finder": "^1.0.0",
+        "webmozart/path-util": "^2.3"
+    },
+    "require-dev": {
+        "behat/behat": "^3.4",
+        "behat/mink": "~1.7",
+        "behat/mink-extension": "^2.2",
+        "behat/mink-goutte-driver": "~1.2",
+        "behat/mink-selenium2-driver": "~1.3",
+        "boedah/robo-drush": "~3",
+        "drupal/coder": "^8.2",
+        "drupal/drupal-extension": "^3.3",
+        "jcalderonzumba/gastonjs": "~1.0.2",
+        "jcalderonzumba/mink-phantomjs-driver": "~0.3.1",
+        "mikey179/vfsstream": "~1.2",
+        "nuvoleweb/robo-config": "^0.1.3",
+        "phpunit/phpunit": ">=4.8.28 <5",
+        "symfony/css-selector": "~2.8"
+    },
+    "conflict": {
+        "drupal/drupal": "*"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "D8P\\": "tests/src",
+            "D8P\\Robo\\": "src",
+            "Drupal\\DrupalProject\\": "tests/src"
+        },
+        "classmap": [
+            "scripts/composer/ScriptHandler.php"
+        ]
+    },
+    "scripts": {
+        "drupal-scaffold": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
+        "pre-install-cmd": [
+            "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
+        ],
+        "pre-update-cmd": [
+            "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
+        ],
+        "post-install-cmd": [
+            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
+            "bash scripts/symlink.sh",
+            "bash scripts/git-hooks.sh"
+        ],
+        "post-update-cmd": [
+            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
+        ]
+    },
+    "extra": {
+        "installer-paths": {
+            "web/core": ["type:drupal-core"],
+            "web/libraries/{$name}": ["type:drupal-library"],
+            "web/modules/contrib/{$name}": ["type:drupal-module"],
+            "web/profiles/contrib/{$name}": ["type:drupal-profile"],
+            "web/themes/contrib/{$name}": ["type:drupal-theme"],
+            "drush/contrib/{$name}": ["type:drupal-drush"]
+        },
+        "drupal-scaffold": {
+            "excludes": [
+                "web.config"
+            ]
+        },
+        "_comment_patches": "Temporarily enabling patches on chained composer.json until config_installer is on core",
+        "patches": {
+            "enable-patching" : true
+        }
+    }
+}

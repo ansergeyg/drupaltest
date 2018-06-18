@@ -1,0 +1,44 @@
+# Project information.
+project:
+  root: /var/www/html/
+  url: http://localhost
+
+# Site information.
+site:
+  name: Site name
+  mail: email@example.com
+  profile: standard
+  update: false
+  locale: en
+
+# Administrator account.
+account:
+  name: admin
+  password: admin
+  mail: admin@example.org
+
+# Database parameters.
+database:
+  host: 127.0.0.1
+  port: 3306
+  name: drupal
+  user: root
+  password: ''
+  prefix: ''
+
+# Behat settings.
+behat:
+  # Behat configuration template.
+  source: behat.yml.dist
+  # Resulting Behat configuration file after performing token replacement.
+  destination: behat.yml
+  # Following tokens will be automatically replaced when running "project:setup-behat".
+  tokens:
+    _base_url: http://localhost
+
+bin:
+  drush: ./vendor/bin/drush
+
+settings:
+  config_directories:
+    sync: ../config/sync

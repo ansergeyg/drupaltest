@@ -1,0 +1,39 @@
+default:
+  autoload:
+    - ./features/bootstrap/
+  suites:
+    default:
+      contexts:
+        - FeatureContext
+        - Drupal\DrupalExtension\Context\DrushContext
+        - Drupal\DrupalExtension\Context\MessageContext
+        - D8P\Context\DrupalContext
+        - D8P\Context\MinkContext
+      paths:
+        - '{root}/tests/features'
+      filters:
+        tags: "~@wip"
+  extensions:
+    Behat\MinkExtension:
+      goutte: ~
+      selenium2:
+        browser: "chrome"
+        capabilities: {"browserName": "chrome", "browser": "chrome", "proxy":{"proxyType":"direct"}}
+      javascript_session: 'selenium2'
+      base-url: '{url}'
+    Drupal\DrupalExtension:
+      api_driver: 'drupal'
+      blackbox: ~
+      drupal:
+        drupal_root: '{root}/web'
+      text:
+        username_field: "Username"
+      selectors:
+        message_selector: '.messages'
+        error_message_selector: '.messages.error'
+        success_message_selector: '.messages.status'
+      drush:
+        root: '{root}/bin/'
+        binary: 'drush'
+  formatters:
+    progress: ~

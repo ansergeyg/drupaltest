@@ -1,0 +1,39 @@
+default:
+  suites:
+    default:
+      contexts:
+        - FeatureContext
+        - Drupal\DrupalExtension\Context\DrushContext
+        - Drupal\DrupalExtension\Context\MessageContext
+        - D8P\Context\DrupalContext
+        - D8P\Context\MinkContext
+      filters:
+        tags: "~@wip"
+  extensions:
+    Behat\MinkExtension:
+      goutte: ~
+      selenium2:
+        browser: "chrome"
+        capabilities: {"browserName": "chrome", "browser": "chrome", "proxy":{"proxyType":"direct"}}
+      javascript_session: 'selenium2'
+      files_path: '/home/horacio/Stashes/cnect-d8p/tests/public'
+      base-url: http://d8p.dev.europa.eu
+    Drupal\DrupalExtension:
+      api_driver: 'drupal'
+      blackbox: ~
+      drupal:
+        drupal_root: '/home/horacio/Stashes/cnect-d8p'
+      text:
+        username_field: "Username"
+      selectors:
+        message_selector: '.messages'
+        error_message_selector: '.messages.error'
+        success_message_selector: '.messages.status'
+      subcontexts:
+        paths:
+          - '${behat.subcontexts.path}'
+      drush:
+        root: '/home/horacio/Stashes/cnect-d8p'
+        binary: './bin/drush'
+  formatters:
+    progress: ~
