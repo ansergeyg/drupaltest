@@ -1,0 +1,1 @@
+composer create-project drupal/recommended-project:^8 test
