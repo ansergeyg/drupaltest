@@ -1,16 +1,24 @@
 <?php
-/**
- * This is project's console commands configuration for Robo task runner.
- *
- * @see http://robo.li/
- */
+
+use Robo\Symfony\ConsoleIO;
+
 class RoboFile extends \Robo\Tasks
 {
-    // define public methods as commands
-  function hello($word) {
-    $this->say("Hello, $word");
+
+  function drhelp($word) {
+    $this->say("To install clean drupal website run: vendor/bin/robo drup");
   }
-  function ls(array $args){
-    $this->taskExec('ls')->args($args)->run();
+
+
+  function drup(ConsoleIO $io, $opts = ['account-name' => '','account-pass' => '', 'site-name' => '', 'locale' => '', 'site-mail' => '', 'db-url' => '']) {
+
+    // $install_params = array_map(function ($key, $value) use ($opts) { 
+    //   return array_key_exists($key, $opts) ? sprintf('--%s=%s', $key, $value) : '';
+    // }, array_keys($opts), array_values($opts));
+    
+    // $io->say("DUMP:");
+    // var_dump($install_params);
+
+    $this->taskExec('drush si standard')->options(array_slice($opts,0, 6), '=')->run();
   }
 }
