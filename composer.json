@@ -56,7 +56,7 @@
         ],
         "post-install-cmd": [
             "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
-            "drush site-install standard -y --db-url=\"mysql://root:@mysql/drupal\""
+            "vendor/bin/robo drup"
         ],
         "post-update-cmd": [
             "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"

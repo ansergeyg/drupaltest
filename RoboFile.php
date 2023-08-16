@@ -5,20 +5,26 @@ use Robo\Symfony\ConsoleIO;
 class RoboFile extends \Robo\Tasks
 {
 
+  /*
+    Help command to list all available commands.
+
+  */
   function drhelp($word) {
     $this->say("To install clean drupal website run: vendor/bin/robo drup");
   }
 
 
-  function drup(ConsoleIO $io, $opts = ['account-name' => '','account-pass' => '', 'site-name' => '', 'locale' => '', 'site-mail' => '', 'db-url' => '']) {
+  /*
+    Command to install clean drupal website.
 
-    // $install_params = array_map(function ($key, $value) use ($opts) { 
-    //   return array_key_exists($key, $opts) ? sprintf('--%s=%s', $key, $value) : '';
-    // }, array_keys($opts), array_values($opts));
+    For some reason options injected into a method 
+    have unnecessary options that are not needed fo this method. 
     
-    // $io->say("DUMP:");
-    // var_dump($install_params);
+    We have to remove them by using array_splice method. 
+  */
+  function drup(ConsoleIO $io, $opts = ['account-name' => '','account-pass' => '', 'site-name' => '', 'locale' => '', 'site-mail' => '', 'db-url' => '']) {
+    $acutal_options_size = 6;
 
-    $this->taskExec('drush si standard')->options(array_slice($opts,0, 6), '=')->run();
+    $this->taskExec('drush si standard -y')->options(array_slice($opts,0, $acutal_options_size), '=')->run();
   }
 }
