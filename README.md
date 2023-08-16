@@ -1,4 +1,4 @@
-##If you need to install clean drupal website you can use this repository.
+## If you need to install clean drupal website you can use this repository.
 
 
 It has minial configuration.
@@ -14,7 +14,7 @@ It has minial configuration.
 4) If you need to change drupal version then update composer.json (currently drupal/core is 9.5)
 
 
-##If you need to add more configuration options during the installation of the clean drupal website
+## If you need to add more configuration options during the installation of the clean drupal website
 
 you need to edit two files:
 
