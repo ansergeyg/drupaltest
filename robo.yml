@@ -1,0 +1,10 @@
+command:
+  drup:
+    options:
+      account-name: admin
+      account-pass: admin
+      site-name: Test drupal website
+      locale: en
+      profile: standard
+      site-mail: admin@example.com
+      db-url: mysql://root:@mysql/drupal
