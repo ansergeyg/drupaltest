@@ -1,4 +1,4 @@
-If you need to install clean drupal website you can use this repository.
+##If you need to install clean drupal website you can use this repository.
 
 
 It has minial configuration.
@@ -12,3 +12,11 @@ It has minial configuration.
 3) If you don't want to install all that separately you can use docker-compose. Run ahoy up 
 
 4) If you need to change drupal version then update composer.json (currently drupal/core is 9.5)
+
+
+##If you need to add more configuration options during the installation of the clean drupal website
+
+you need to edit two files:
+
+1) robo.yml (add more options here)
+2) RoboFile.php (increase $ACTUAL_OPTIONS_SIZE respectively)
