@@ -21,6 +21,20 @@ commands:
     cmd: |
       docker-compose down
 
+  sh:
+    usage: Start a shell on the web container.
+    cmd: |
+      ahoy runphp bash
+
+  runphp:
+    usage: Run a command inside a running php container.
+    cmd: |
+      if [ -f "docker-compose.local.yml" ]; then
+        docker-compose -f docker-compose.local.yml exec web $@
+      else
+        docker-compose exec web $@
+      fi  
+
   logs:
     usage: Check the docker container logs.
     cmd: |
@@ -29,4 +43,5 @@ commands:
   drup:
     usage: Install clean drupal website.
     cmd: |
-      vendor/bin/robo drup
+      ahoy runphp composer install
+      ahoy runphp vendor/bin/robo drup
