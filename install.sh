@@ -1,1 +1,1 @@
-composer create-project drupal/recommended-project:^9 test
+composer create-project drupal/recommended-project:^10 drupal_test
