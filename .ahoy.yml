@@ -12,14 +12,14 @@ commands:
       fi
       if [ -f "docker-compose.local.yml" ]; then
         rm -rf docker-compose.override.yml
-        docker-compose -f docker-compose.local.yml up -d
+        docker compose -f docker-compose.local.yml up -d
       else
-        docker-compose up -d
+        docker compose up -d
       fi
   down:
     usage: Stop the docker containers.
     cmd: |
-      docker-compose down
+      docker compose down
 
   sh:
     usage: Start a shell on the web container.
@@ -29,12 +29,12 @@ commands:
   runphp:
     usage: Run a command inside a running php container.
     cmd: |
-        docker-compose exec web $@
+        docker compose exec web $@
 
   logs:
     usage: Check the docker container logs.
     cmd: |
-      docker-compose logs -f
+      docker compose logs -f
 
   drup:
     usage: Install clean drupal website.
