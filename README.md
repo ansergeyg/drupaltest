@@ -13,13 +13,13 @@ If you have docker just run:
 2) ahoy drup
 
 
-If you don't want docker then you should have apache2.4 + mysql 5.7 + php >= 7.1 installed. 
+If you don't want docker then you should have apache2.4 + mysql 5.7 + php >= 8.1 installed. 
 
 1) composer install
 2) open localhost in the brawser and install the website
 
 
-If you need to change drupal version then update composer.json (currently drupal/core is 9.5)
+If you need to change drupal version then update composer.json (currently drupal/core is 10.4)
 
 
 ## If you need to add more configuration options during the installation of the clean drupal website
