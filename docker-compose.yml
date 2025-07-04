@@ -1,6 +1,6 @@
 services:
   web:
-    image: fpfis/httpd-php-dev:8.1
+    image: registry.fpfis.eu/digit/devsecops/httpd-php:8.3-dev
     working_dir: ${PWD}
     ports:
       - 80:80
@@ -22,7 +22,7 @@ services:
       # For Mac users: sudo ifconfig en0 alias 10.254.254.254 255.255.255.0
       # For Linux users: sudo ip addr add 10.254.254.254/32 dev lo label lo:1
   mysql:
-    image: percona/percona-server:5.7
+    image: percona/percona-server:8.0
     command: --max_allowed_packet=1073741824
     ports:
       - "3306:3306"
