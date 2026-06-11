@@ -79,3 +79,41 @@ jobs:
         run: |
           composer show drupal/core || true
           composer show drush/drush || true
+
+      - name: Start Drupal web server
+        run: |
+          (
+            cd web
+            nohup php -S 127.0.0.1:8080 .ht.router.php > /tmp/drupal-server.log 2>&1 &
+            echo $! > /tmp/drupal-server.pid
+          )
+
+          for attempt in {1..30}; do
+            if curl -fsS http://127.0.0.1:8080/ | grep -q "Test drupal website"; then
+              exit 0
+            fi
+            echo "Waiting for Drupal web server (${attempt}/30)"
+            sleep 2
+          done
+
+          cat /tmp/drupal-server.log
+          exit 1
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install Playwright
+        run: |
+          npm install --no-save @playwright/test
+          npx playwright install --with-deps chromium
+
+      - name: Run browser smoke tests
+        env:
+          BASE_URL: http://127.0.0.1:8080
+        run: npx playwright test tests/e2e --browser=chromium --reporter=line
+
+      - name: Show Drupal web server log
+        if: always()
+        run: cat /tmp/drupal-server.log || true
