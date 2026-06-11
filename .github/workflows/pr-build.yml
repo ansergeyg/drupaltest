@@ -1,0 +1,81 @@
+name: PR build
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Composer and Drupal install
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+          MYSQL_DATABASE: drupal
+          MYSQL_ROOT_HOST: "%"
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -uroot --protocol=tcp"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+
+    env:
+      COMPOSER_MEMORY_LIMIT: -1
+      COMPOSER_NO_INTERACTION: 1
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+          coverage: none
+          tools: composer:v2
+          extensions: bcmath, ctype, curl, dom, fileinfo, filter, gd, mbstring, openssl, pdo_mysql, session, simplexml, tokenizer, xml, zip
+
+      - name: Validate Composer configuration
+        run: composer validate --no-check-lock --strict
+
+      - name: Cache Composer downloads
+        uses: actions/cache@v4
+        with:
+          path: ~/.composer/cache/files
+          key: ${{ runner.os }}-composer-${{ hashFiles('composer.json') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+      - name: Match local database hostname
+        run: echo "127.0.0.1 mysql" | sudo tee -a /etc/hosts
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --no-scripts
+
+      - name: Scaffold Drupal files
+        run: composer drupal:scaffold
+
+      - name: Create required project files
+        run: composer run-script post-update-cmd
+
+      - name: Install Drupal site
+        run: PATH="$PWD/vendor/bin:$PATH" vendor/bin/robo drup
+
+      - name: Show installed package versions
+        if: always()
+        run: |
+          composer show drupal/core || true
+          composer show drush/drush || true
