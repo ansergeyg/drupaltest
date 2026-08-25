@@ -41,3 +41,10 @@ commands:
     cmd: |
       ahoy runphp composer install
       ahoy runphp vendor/bin/robo drup
+
+  drmul:
+    usage: Install multilingual drupal dependencies.
+    cmd: |
+      ahoy runphp composer install
+      ahoy runphp vendor/bin/robo drup
+      ahoy runphp vendor/bin/robo drmodules
