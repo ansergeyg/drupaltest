@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         bootstrap="web/core/tests/bootstrap.php"
+         colors="true"
+         beStrictAboutTestsThatDoNotTestAnything="true"
+         beStrictAboutOutputDuringTests="true"
+         failOnWarning="true"
+         printerClass="\Drupal\Tests\Listeners\HtmlOutputPrinter"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+  <php>
+    <ini name="error_reporting" value="32767"/>
+    <ini name="memory_limit" value="-1"/>
+    <env name="SIMPLETEST_BASE_URL" value="http://web"/>
+    <env name="SIMPLETEST_DB" value="sqlite://localhost/web/sites/simpletest/db.sqlite"/>
+    <env name="BROWSERTEST_OUTPUT_DIRECTORY" value="/tmp/browser_output"/>
+  </php>
+  <testsuites>
+    <testsuite name="revision-purgatory-unit">
+      <directory suffix="Test.php">web/modules/contrib/revision_purgatory/tests/src/Unit</directory>
+    </testsuite>
+    <testsuite name="revision-purgatory-functional">
+      <directory suffix="Test.php">web/modules/contrib/revision_purgatory/tests/src/Functional</directory>
+    </testsuite>
+  </testsuites>
+  <listeners>
+    <listener class="\Drupal\Tests\Listeners\DrupalListener"/>
+  </listeners>
+</phpunit>

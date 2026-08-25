@@ -8,3 +8,5 @@ command:
       profile: standard
       site-mail: admin@example.com
       db-url: mysql://root:@mysql/drupal
+
+  drmodules:

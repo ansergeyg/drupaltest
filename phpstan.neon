@@ -1,0 +1,6 @@
+parameters:
+    level: 3
+    paths:
+        - web/modules/contrib/revision_purgatory
+    excludePaths:
+        - web/modules/contrib/revision_purgatory/tests/*

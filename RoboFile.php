@@ -32,4 +32,14 @@ class RoboFile extends \Robo\Tasks
     $this->taskExec('drush si standard -y')->options(
       array_slice($opts,0, $ACTUAL_OPTIONS_SIZE), '=')->run();
   }
+
+  function drmodules() {
+    $this->taskExec('drush en language locale content_translation config_translation workflows content_moderation -y')->run();
+    $this->taskExec('drush config:import --partial --source=web/core/recipes/editorial_workflow/config -y')->run();
+    $this->taskExec("drush config:set --input-format=yaml workflows.workflow.editorial type_settings.entity_types.node '[article]' -y")->run();
+    $this->taskExec('drush language:add fr,nl')->run();
+    $this->taskExec('drush config:set language.negotiation url.prefixes.en en -y')->run();
+    $this->taskExec('drush config:set language.negotiation url.prefixes.fr fr -y')->run();
+    $this->taskExec('drush config:set language.negotiation url.prefixes.nl nl -y')->run();
+  }
 }
