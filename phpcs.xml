@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<ruleset name="Drupal">
+  <description>PHPCS configuration for the revision_purgatory module.</description>
+  <rule ref="vendor/drupal/coder/coder_sniffer/Drupal" />
+  <file>web/modules/contrib/revision_purgatory</file>
+  <exclude-pattern>*/tests/*</exclude-pattern>
+</ruleset>
